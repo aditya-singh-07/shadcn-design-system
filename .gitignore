@@ -12,6 +12,8 @@
 
 # testing
 /coverage
+scripts/.preview-render-report.json
+scripts/.browser-test-report.json
 
 # next.js
 /.next/
