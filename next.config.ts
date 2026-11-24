@@ -1,7 +1,16 @@
 import type { NextConfig } from "next";
 
+const isPages = process.env.GITHUB_PAGES === "true";
+
 const nextConfig: NextConfig = {
+  ...(isPages && {
+    output: "export",
+    basePath: process.env.BASE_PATH ?? "",
+    assetPrefix: process.env.BASE_PATH ?? "",
+    trailingSlash: true,
+  }),
   images: {
+    ...(isPages && { unoptimized: true }),
     remotePatterns: [
       {
         protocol: "https",
@@ -17,8 +26,8 @@ const nextConfig: NextConfig = {
   experimental: {
     agentFeedback: true,
   },
-  cacheComponents: true,
-  partialPrefetching: true,
+  cacheComponents: !isPages,
+  partialPrefetching: !isPages,
   turbopack: {
     rules: {
       "*.css": {
